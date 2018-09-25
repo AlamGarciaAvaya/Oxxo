@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_poliza"
+            android:icon="@mipmap/ic_poliza_round"
+            android:title="Poliza" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@mipmap/ic_poliza_round"
+            android:title="Contacto" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@mipmap/ic_poliza_round"
+            android:title="Otros" />
+    </group>
+
+    <item android:title="Reportar Incidente">
+        <menu>
+            <item
+                android:id="@+id/dualvideo_menu"
+                android:icon="@drawable/imageedit_1_7741237077"
+                android:title="Dual Video" />
+            <item
+                android:id="@+id/oneway_menu"
+                android:icon="@drawable/imageedit_2_2835506998"
+                android:title="OneWay Video" />
+            <item
+                android:id="@+id/audio_only"
+                android:icon="@drawable/call"
+                android:title="Audio" />
+        </menu>
+    </item>
+    <item android:title="QR Scanner">
+        <menu>
+            <item
+                android:id="@+id/qr_menu"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="QR Scanner" />
+        </menu>
+    </item>
+
+</menu>
