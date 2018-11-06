@@ -46,6 +46,8 @@ class AjustesActivity : AppCompatActivity() {
         editor.putString("puerto", puerto_txt.text.toString())
         editor.putString("numero", num_txt.text.toString())
         editor.putString("numeroqr", numqr_txt.text.toString())
+        editor.putString("lang", lang_txt.text.toString())
+        editor.putString("endpointqr", endpointqr_txt.text.toString())
         editor.apply()
         finish()
     }
@@ -61,18 +63,24 @@ class AjustesActivity : AppCompatActivity() {
         var numero = sharedPreferences.getString("numero", "2681322102")
         var debug = sharedPreferences.getString("debug", "1")
         var numeroqr = sharedPreferences.getString("numeroqr", "17863930499")
+        var lang = sharedPreferences.getString("lang", "es-MX")
+        var endpoint = sharedPreferences.getString("endpointqr", "http://breeze2-213.collaboratory.avaya.com/services/EventingConnector/events")
         displayname_txt.setText(displayname)
         user_txt.setText(username)
         host_txt.setText(host)
         puerto_txt.setText(puerto)
         num_txt.setText(numero)
         numqr_txt.setText(numeroqr)
+        lang_txt.setText(lang)
+        endpointqr_txt.setText(endpoint)
         Log.d("Valores", "Key1 $displayname")
         Log.d("Valores", "Key2 $username")
         Log.d("Valores", "Key3 $host")
         Log.d("Valores", "Key4 $puerto")
         Log.d("Valores", "Key5 $numero")
         Log.d("Valores", "Key6 $debug")
+        Log.d("Valores", "Key7 $lang")
+        Log.d("Valores", "Key8 $endpoint")
         when (Integer.parseInt(debug)) {
             1 -> switch1.isChecked = true
             else -> switch1.isChecked = false

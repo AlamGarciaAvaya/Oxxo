@@ -1,22 +1,16 @@
 package com.example.alam.hdi
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.budiyev.android.codescanner.AutoFocusMode
-import com.budiyev.android.codescanner.CodeScanner
-import com.budiyev.android.codescanner.CodeScannerView
-import com.budiyev.android.codescanner.DecodeCallback
-import com.budiyev.android.codescanner.ErrorCallback
-import com.budiyev.android.codescanner.ScanMode
-import com.github.kittinunf.fuel.core.DataPart
-import com.github.kittinunf.fuel.core.FuelManager
-import com.github.kittinunf.fuel.core.Method
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_llamada_video.*
+import com.budiyev.android.codescanner.*
 import kotlinx.android.synthetic.main.activity_qr.*
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+
 
 class QR : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
@@ -39,37 +33,26 @@ class QR : AppCompatActivity() {
                 var myPreferences = "myPrefs"
                 var sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
                 var numeroqr = sharedPreferences.getString("numeroqr", "17863930499")
+                var endpoint = sharedPreferences.getString("endpointqr", "http://breeze2-213.collaboratory.avaya.com/services/EventingConnector/events")
+                var lang = sharedPreferences.getString("lang", "es-MX")
 
-                //Definimos las variables de URL que tendra nuestra peticion con sus respectivas llaves
-                //Key
-                var paramKey1 = "family"
-                //Parametro-Variable
-                var paramValue1 = "AAAMIAETIQUETAS"
-                //Key
-                var paramKey2 = "type"
-                //Parametro Variable
-                var paramValue2 = "AAAMIAETIQUETASDESCRIPCION"
-                var paramKey3 = "version"
-                //Parametro Variable
-                var paramValue3 = "1.0"
-                var paramKey4 = "eventbody"
-                //Parametro Variable
-                var paramValue4 = "{\"mobileNumber\":\"{$numeroqr}\",\"productcode\":\"{$it}\"}"
-            val formData = listOf(paramKey1 to paramValue1,paramKey2 to paramValue2,paramKey3 to paramValue3,paramKey4 to paramValue4 )
+            val client = OkHttpClient()
 
-            //Invocamos FUEL Manager y lo asignamos a una variable para tener un mejor acceso a el
-                val manager: FuelManager by lazy { FuelManager() }
-                //Usamos el metodo request de FUUEL Manager, junto a la lusta de parametros
-            manager.upload("http://breeze2-213.collaboratory.avaya.com/services/EventingConnector/events", param = formData)
-                    //Upload normally requires a file, but we can give it an empty list of `DataPart`
-                    .dataParts { request, url -> listOf<DataPart>() }
-                    .responseString { request, response, result ->
-                        runOnUiThread {
-                        Toast.makeText(this, "Se ha detectado un producto: ${it.text} . Llamando",
-                                Toast.LENGTH_LONG).show()
-                        }
-                    }
+            val mediaType = MediaType.parse("multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW")
+            val body = RequestBody.create(mediaType, "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"family\"\r\n\r\nAAAMIAETIQUETAS\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"type\"\r\n\r\nAAAMIAETIQUETASDESCRIPCION\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"version\"\r\n\r\n1.0\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"eventBody\"\r\n\r\n{\"mobileNumber\":\"$numeroqr\",\"productcode\":\"$it\",\"language\":\"$lang\"}\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--")
+            val request = Request.Builder()
+                    .url(endpoint)
+                    .post(body)
+                    .addHeader("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW")
+                    .addHeader("Content-Type", "multipart/form-data")
+                    .addHeader("cache-control", "no-cache")
+                    .build()
 
+            val response = client.newCall(request).execute()
+            runOnUiThread {
+                Toast.makeText(this, "Se ha detectado un producto: ${it}",
+                        Toast.LENGTH_LONG).show()
+            }
 
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
