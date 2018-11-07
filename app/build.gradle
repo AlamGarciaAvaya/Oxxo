@@ -8,11 +8,11 @@ def formattedDate = date.format('yyyyMMdd_HHmm')
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.example.alam.hdi"
+        applicationId "com.example.alam.oxxo"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "OXXO_" + formattedDate)
 

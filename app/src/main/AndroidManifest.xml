@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.alam.hdi">
+    package="com.example.alam.oxxo">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.alam.oxxo.MainActivity"
             android:clearTaskOnLaunch="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
@@ -34,18 +34,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AjustesActivity"
+            android:name="com.example.alam.oxxo.AjustesActivity"
             android:clearTaskOnLaunch="true" />
         <activity
-            android:name=".LlamadaVideo"
+            android:name="com.example.alam.oxxo.LlamadaVideo"
             android:clearTaskOnLaunch="true"></activity>
         <activity
-            android:name=".LlamadaOneWay"
+            android:name="com.example.alam.oxxo.LlamadaOneWay"
             android:clearTaskOnLaunch="true"></activity>
         <activity
-            android:name=".LlamadaAudio"
+            android:name="com.example.alam.oxxo.LlamadaAudio"
             android:clearTaskOnLaunch="true"></activity>
-        <activity android:name=".QR"></activity>
+        <activity android:name="com.example.alam.oxxo.QR"></activity>
     </application>
 
 </manifest>
